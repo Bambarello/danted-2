@@ -1,0 +1,28 @@
+services:
+  dante:
+    build: .
+    container_name: dante
+    restart: unless-stopped
+    ports:
+      - "55555:55555"
+    environment:
+      PROXY_USER: ${PROXY_USER}
+      PROXY_PASSWORD: ${PROXY_PASSWORD}
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_BIND_SERVICE   # only if binding <1024; can drop for port 55555
+      - SETUID             # for sockd's privsep
+      - SETGID
+      - CHOWN              # for adduser at runtime
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
