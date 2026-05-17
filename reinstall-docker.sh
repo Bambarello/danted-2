@@ -185,8 +185,8 @@ docker compose version
 
 # Sanity-check that compose is v2 (the entire point of this reinstall)
 COMPOSE_VER="$(docker compose version --short 2>/dev/null || true)"
-if [[ -z "$COMPOSE_VER" || "${COMPOSE_VER%%.*}" != "2" ]]; then
-    die "Expected Docker Compose v2.x but got: '${COMPOSE_VER:-unknown}'"
+if [[ -z "$COMPOSE_VER" || "${COMPOSE_VER%%.*}" != "5" ]]; then
+    die "Expected Docker Compose v5.x but got: '${COMPOSE_VER:-unknown}'"
 fi
 
 # Sanity-check that LimitNOFILE took effect
