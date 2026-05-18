@@ -264,8 +264,7 @@ SOCKS5 authentication travels in plaintext over the wire. If the proxy is public
 Alpine periodically rebuilds the `dante-server` package (`-r0` → `-r1` → ...) to pull in dependency patches and packaging fixes. Because the Dockerfile uses a version range (`>=1.4.4 <1.4.5`), these revisions are picked up automatically on rebuild — no Dockerfile change needed:
 
 ```bash
-docker compose build --no-cache
-docker compose up -d
+docker compose up -d --build --force-recreate --no-cache
 ```
 
 A weekly cron or GitHub Actions job running the two commands above is the standard pattern.
@@ -305,3 +304,12 @@ Make sure SwitchyOmega/FoxyProxy is configured for `SOCKS5`, not `SOCKS4`, and t
 
 **`Connection refused`**
 Check the host firewall (`ufw`, `iptables`, cloud security group) and that the container is actually listening: `docker exec dante nc -z 127.0.0.1 55555 && echo ok`.
+
+## Migration & Install
+
+cd ~:
+git clone https://github.com/Bambarello/danted-2.git; cd ./danted-2
+bash reinstall-docker.sh
+bash migrate-dante-credentials.sh
+docker compose up -d --build --force-recreate
+docker compose logs -f

@@ -24,6 +24,7 @@ RUN chmod 0755 /usr/local/bin/entrypoint.sh
 
 EXPOSE 55555
 
+#
 #HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
 #  CMD printf '\x05\x01\x00' | nc -w 2 127.0.0.1 55555 | head -c 2 | grep -q $'\x05\xff' || exit 1
 
